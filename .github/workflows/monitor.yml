@@ -1,0 +1,41 @@
+name: Akal Batch 1 seat monitor
+
+on:
+  schedule:
+    # every 15 minutes; also carries the daily digest (first run at/after 08:00 WIB)
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: akal-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check seats
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER: ${{ vars.NTFY_SERVER }}
+          DIGEST_HOUR: ${{ vars.DIGEST_HOUR }}
+        run: python3 monitor.py
+
+      - name: Persist state
+        if: always()
+        run: |
+          if [ -n "$(git status --porcelain state.json)" ]; then
+            git config user.name "akal-monitor"
+            git config user.email "actions@users.noreply.github.com"
+            git add state.json
+            git commit -m "state: $(date -u +%FT%TZ)"
+            git push
+          else
+            echo "state unchanged"
+          fi
