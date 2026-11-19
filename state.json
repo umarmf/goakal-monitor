@@ -1,12 +1,13 @@
 {
-  "lastDigestDate": null,
+  "lastDigestDate": "2026-11-19",
   "lastErrorAlertAt": null,
-  "lastHeartbeat": null,
-  "prevDayDate": null,
-  "prevDaySeats": null,
-  "quotaMax": null,
-  "quotaUsed": null,
-  "seats": null,
-  "title": null,
-  "updatedAt": null
+  "lastHeartbeat": "2026-11-19T17:50:18+07:00",
+  "prevDayDate": "2026-11-19",
+  "prevDaySeats": 9,
+  "quotaMax": 10,
+  "quotaUsed": 1,
+  "seats": 9,
+  "source": "json",
+  "title": "Batch 1 (10 pertama)",
+  "updatedAt": "2026-11-19T17:50:18+07:00"
 }
